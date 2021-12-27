@@ -14,7 +14,8 @@ import {
 import { 
     CreateUserValidSchema, 
     loginValidSchema, 
-    PasswordValidSchema 
+    PasswordValidSchema, 
+    updateUserValidSchema
 } from "./schema/userValidSchema";
 
 export const createUserValidation = async (
@@ -102,5 +103,29 @@ export const loginValidation = async(
         throw new Api400Error("비밀번호를 확인해 주세요.");
     }
 
+    next();
+}
+
+// 이메일과 비밀번호를 임의로 변경할 수 없도록 한다.
+export const updateUserValidation = async (
+    req: Request, res: Response, next: NextFunction) => {
+    const schema = updateUserValidSchema;
+
+    const { value, error } = schema.validate(req.body);
+    if (error){
+        console.log(error);
+        throw new Api409Error(error.message);
+    }
+
+    req.body = value;
+    const userServiceInstance = Container.get(UserService);
+    const userInfo = await userServiceInstance.getUserById(req.body.id);
+
+    if (!userInfo){
+        throw new Api404Error("잘못된 사용자의 정보를 수정하고 있습니다.");
+    }
+
+    req.body.email = userInfo.email;
+    req.body.password = userInfo.password;
     next();
 }

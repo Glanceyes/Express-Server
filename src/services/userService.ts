@@ -48,6 +48,12 @@ export class UserService{
         }
     }
 
+    // 사용자의 비밀번호는 같이 변경되지 못하도록 막아야 한다.
+    public async updateUser(data: UserDTO){
+        const updatedUser = await this.repo.updateRowById(User, data);
+        return updatedUser;
+    }
+
     public async changeUserPassword(data: UserDTO){
         const { rowInfo } = await this.repo.fetchRowById(User, data.id);
         rowInfo.password = await this.hashUserPassword(data.password);
