@@ -9,5 +9,19 @@ export const createUser = async(req: Request, res: Response) => {
 };
 
 export const login = async(req: Request, res: Response) => {
+    const { email } = req.body.validUser;
+    const userServiceInstance = Container.get(UserService);
+    const { id } = await userServiceInstance.getUserByEmail(email);
+    const { accessToken, refreshToken } = await userServiceInstance.getToken({ id });
     
+    res.status(200).cookie("refreshToken", refreshToken, {
+        sameSite: "none",
+        secure: true,
+        httpOnly: true,
+    })
+    .send({
+        accessToken,
+        refreshToken,
+        message: "로그인 성공"
+    })
 }

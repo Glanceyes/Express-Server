@@ -38,13 +38,13 @@ export class UserService{
         return newUser;
     }
 
-    public async loginUser(data: UserDTO){
-        const { rowInfo } = await this.repo.fetchRowByEmail(User, data.email);
-        const foundUser = rowInfo;
-        const verified = this.verifyUserPassword(data.password, foundUser.password);
-        if (verified){
-            const token = this.jwt.generateToken(foundUser.id, "ACCESS_TOKEN", "10h");
-            return token;
+    public async getToken(data: UserDTO){
+        const accessToken = this.jwt.generateToken("ACCESS_TOKEN", "10h");
+        const refreshToken = this.jwt.generateToken("REFRESH_TOKEN", "90d");
+
+        return {
+            accessToken: accessToken({id: data.id}),
+            refreshToken: refreshToken({id: data.id})
         }
     }
 

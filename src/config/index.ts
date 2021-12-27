@@ -13,6 +13,6 @@ export default {
 
     jwt: {
         algorithm: process.env.JWT_ALGORITHM || "HS256",
-        secret: process.env.SECRET_KEY,
+        secret: process.env.SECRET_KEY || 'secret',
     }
 };

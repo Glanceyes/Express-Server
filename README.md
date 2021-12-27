@@ -11,5 +11,4 @@
 3. Run `npm start` command
 
 ## Tool
-+ VSCode, Git, GitHub, Postman, MySQL Workbench# Express_Server
-# Express_Server
++ VSCode, Git, GitHub, Postman, MySQL Workbench
