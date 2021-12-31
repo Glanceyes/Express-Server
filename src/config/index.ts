@@ -14,5 +14,7 @@ export default {
     jwt: {
         algorithm: process.env.JWT_ALGORITHM || "HS256",
         secret: process.env.SECRET_KEY || 'secret',
+        accessTokenTime: process.env.ACCESS_TOKEN_TIME || '10h',
+        refreshToeknTime: process.env.REFRESH_TOKEN_TIME || '90d',
     }
 };

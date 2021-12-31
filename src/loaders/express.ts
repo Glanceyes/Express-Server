@@ -13,7 +13,7 @@ export default async (app: Express) => {
     app.use(
         cors({
             origin: "*",
-            methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+            methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
             maxAge: 3600 * 5,
             credentials: true,
         })

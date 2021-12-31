@@ -4,6 +4,7 @@ import { UserRepository } from "../repository/userRepository";
 import { Service } from "typedi";
 import { Jwt } from "../helper/utils/jwt";
 import { Hashing } from "../helper/utils/hashing";
+import config from "../config";
 
 @Service()
 export class UserService{
@@ -39,8 +40,8 @@ export class UserService{
     }
 
     public async getToken(data: UserDTO){
-        const accessToken = this.jwt.generateToken("ACCESS_TOKEN", "10h");
-        const refreshToken = this.jwt.generateToken("REFRESH_TOKEN", "90d");
+        const accessToken = this.jwt.generateToken("ACCESS_TOKEN", config.jwt.accessTokenTime);
+        const refreshToken = this.jwt.generateToken("REFRESH_TOKEN", config.jwt.refreshToeknTime);
 
         return {
             accessToken: accessToken({id: data.id}),
